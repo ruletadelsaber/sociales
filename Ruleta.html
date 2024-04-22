@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Helmer Pardo</title>
+<link href="css/resets.css" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="css/ui-lightness/jquery.ui.all.css" />
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-git.js"></script>
+<script type="text/javascript" src="js/jquery.transit.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<style type="text/css">
+.wheel-wrap {
+    top: 50px;
+    position: relative;
+    width: 600px;
+    height: 600px;
+    overflow: hidden;
+    margin: 0 auto;
+    z-index: 1;
+}
+.marker {
+    top: 0px;
+    left: 0px;
+    width: 550px;
+    z-index: 2;
+    position: absolute;
+}
+.wheel {
+    top: 90px;
+    left: 75px;
+    width: 550px;
+    z-index: 1;
+}
+</style>
+<style>
+  .progress-label {
+    position: absolute;
+    left: 50%;
+    top: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+  }
+  
+  .btn {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 50;
+  -moz-border-radius: 50;
+  border-radius: 50px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 30px;
+  outline:none;
+  padding: 20px 30px 20px 30px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+</style>
+<script>
+$(function() {
+		$( "#dialog" ).dialog({ 
+	        autoOpen: false,
+			modal: true,
+			height:1080,
+			width: 1200,
+			position:['center',2],
+			title: 'PREGUNTA',
+			show: {
+				effect: "blind",
+				duration: 2000
+			},
+			hide: {
+				effect: "drop",
+				duration: 10,
+			},
+					 });
+
+});
+
+function NUEVO(){	
+$('#dialog').dialog("close");
+}
+
+function SONIDOT(){
+var soundt = document.createElement('audio');
+soundt.setAttribute('src', 'sonido6.mp3');
+soundt.play();
+}
+
+function ALERTA(){
+$('#progressbar').fadeIn(1000).delay(3000).fadeOut(1000, ALERTA) 
+}
+
+cantidad = 1;
+var respuestalista = new Array();
+
+function ADD(a){	
+var soundp = document.createElement('audio');
+soundp.setAttribute('src', 'sonido2.mp3');
+soundp.play();
+$('#dialog').dialog("open");
+
+activar = 0;
+componente = a;
+
+while(activar < 1){
+
+if(componente == 1){
+pregunta = Math.round(Math.random() * 7);//SOCIALES
+respuesta = ["4", "4", "3", "4", "2", "3", "3", "3"];
+
+}
+
+if(componente == 2){
+pregunta = Math.round(Math.random() * 7);//SOCIALES
+respuesta = ["4", "4", "3", "2", "2", "4", "1", "2"];
+
+}
+
+if(componente == 3){
+pregunta = Math.round(Math.random() * 7);//SOCIALES
+respuesta = ["3", "3", "1", "3", "4", "2", "2", "4"];
+
+}
+
+if(componente == 4){
+pregunta = Math.round(Math.random() * 7);//SOCIALES
+respuesta = ["1", "4", "1", "2", "2", "1", "1", "2"];
+
+}
+
+if(componente == 5){
+pregunta = Math.round(Math.random() * 7);//SOCIALES
+respuesta = ["2", "1", "1", "2", "3", "4", "1", "3"];
+
+}
+
+if(componente == 6){
+pregunta = Math.round(Math.random() * 7);//SOCIALES
+respuesta = ["4", "3", "3", "2", "2", "4", "1", "3"];
+
+}
+
+if(componente == 7){
+pregunta = Math.round(Math.random() * 7);//SOCIALES 
+respuesta = ["3", "3", "4", "4", "3", "3", "3", "1"];
+
+}
+
+activarespuesta = a +''+ pregunta;
+var verificar = respuestalista.indexOf(activarespuesta);
+
+if(verificar < 0){
+activar = 1;
+}
+
+//activar = 1;
+}
+
+respuestalista[cantidad] = activarespuesta;
+resp = respuesta[pregunta];
+pregunta = pregunta + 1;
+
+CARGARCOMPLETO(a,pregunta);
+ALERTA();
+$('#datostabla').html('<center><table id="tablapregunta" width="5%" align="center"><tr></tr></table></center>');
+
+$('#datos').html('<center><img src="1/'+a+'/p'+pregunta+'.jpg" width="1100px"/></center>');
+
+cant = 1;
+
+while(cant <= 4){
+
+if(cant == 1){
+opcion = 'A';
+}
+if(cant == 2){
+opcion = 'B';
+}
+if(cant == 3){
+opcion = 'C';
+}
+if(cant == 4){
+opcion = 'D';
+}
+
+if(cant == resp){
+$('#tablapregunta').append('<td><a href="#" class="btn" id="btn" onClick="RESPUESTA('+a+','+pregunta+')">'+opcion+'</a></td>');
+
+}else{
+$('#tablapregunta').append('<td><a href="#" class="btn" id="btn'+cant+'" onClick="RESPUESTA'+cant+'('+a+','+pregunta+')">'+opcion+'</a></td>');
+
+}
+
+cant = cant + 1;
+}
+$('#tablapregunta').append('<td id="pregunta" style="display:none"><a href="#" class="btn" style="margin-left:30px;" id="btn" onMouseOver="PREGUNTA('+a+','+pregunta+')" onMouseOut="PREGUNTA1('+a+','+pregunta+')">PREGUNTA</a><a href="#" class="btn" id="btn" style="margin-left:50px;" onClick="NUEVO()">SALIR</a></td>');
+
+pararsonido = setTimeout( SONIDOT, 80005 );
+//pararsonido1 = setTimeout( ALERTA, 80000 );
+
+cantidad = cantidad + 1;
+
+}
+</script>
+<script>
+function CARGARCOMPLETO(a,pregunta){
+var progressbar = $( "#progressbar" ),
+      progressLabel = $( ".progress-label" );
+ 
+    progressbar.progressbar({
+      value: false,
+      change: function() {
+        progressLabel.text( progressbar.progressbar( "value" ) + " Seg" );
+		if(progressbar.progressbar( "value" ) == 0){
+		progressLabel.text( "Tiempo" );
+		}
+      },
+      complete: function() {
+        progressLabel.text( "Complete!" );
+      }
+    });
+
+    function progress() {
+      var val = progressbar.progressbar( "value" ) || 100;
+ 
+      progressbar.progressbar( "value", val - 1 );
+ 
+      if ( val > 1 ) {
+        parar = setTimeout( progress, 1000 );
+      }
+	  if ( val == 1 ) {
+        RESPUESTA1(a,pregunta);
+      }
+    }
+ 
+    parar = setTimeout( progress, 1000 );
+}
+
+function CARGAR(a,pregunta){
+$("#btn").css("background", "#10B235");
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/r'+pregunta+'.jpg" width="1100px" /></td></tr></table></center>');
+$("#pregunta").css("display", "block");
+}
+
+function CARGAR1(a,pregunta){
+$("#btn1").css("background", "#EA1515");
+$("#btn").css("background", "#10B235");
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/r'+pregunta+'.jpg" width="1100px" /></td></tr></table></center>');
+$("#pregunta").css("display", "block");
+}
+
+function CARGAR2(a,pregunta){
+$("#btn2").css("background", "#EA1515");
+$("#btn").css("background", "#10B235");
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/r'+pregunta+'.jpg" width="1100px" /></td></tr></table></center>');
+$("#pregunta").css("display", "block");
+}
+
+function CARGAR3(a,pregunta){
+$("#btn3").css("background", "#EA1515");
+$("#btn").css("background", "#10B235");
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/r'+pregunta+'.jpg" width="1100px" /></td></tr></table></center>');
+$("#pregunta").css("display", "block");
+}
+
+function CARGAR4(a,pregunta){
+$("#btn4").css("background", "#EA1515");
+$("#btn").css("background", "#10B235");
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/r'+pregunta+'.jpg" width="1100px"/></td></tr></table></center>');
+$("#pregunta").css("display", "block");
+}
+
+function CARGAR5(a,pregunta){
+$("#btn5").css("background", "#EA1515");
+$("#btn").css("background", "#10B235");
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/r'+pregunta+'.jpg" width="1100px"/></td></tr></table></center>');
+$("#pregunta").css("display", "block");
+}
+
+function CARGAR6(a,pregunta){
+$("#btn6").css("background", "#EA1515");
+$("#btn").css("background", "#10B235");
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/r'+pregunta+'.jpg" width="1100px"/></td></tr></table></center>');
+$("#pregunta").css("display", "block");
+}
+
+function CARGAR7(a,pregunta){
+$("#btn7").css("background", "#EA1515");
+$("#btn").css("background", "#10B235");
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/r'+pregunta+'.jpg" width="1100px"/></td></tr></table></center>');
+$("#pregunta").css("display", "block");
+}
+
+function PREGUNTA(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/p'+pregunta+'.jpg" width="1100px"/></td></tr></table></center>');
+
+}
+
+function PREGUNTA1(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="1/'+a+'/r'+pregunta+'.jpg" width="1100px"/></td></tr></table></center>');
+
+}
+
+function BOTON(){
+$("#btn").removeAttr("onclick");
+$("#btn1").removeAttr("onclick");
+$("#btn2").removeAttr("onclick");
+$("#btn3").removeAttr("onclick");
+$("#btn4").removeAttr("onclick");
+$("#btn5").removeAttr("onclick");
+$("#btn6").removeAttr("onclick");
+$("#btn7").removeAttr("onclick");
+clearTimeout(parar);
+clearTimeout(pararsonido);
+//clearTimeout(pararsonido1);
+}
+
+function SONIDOA(){
+var sounda = document.createElement('audio');
+sounda.setAttribute('src', 'sonido5.mp3');
+sounda.play();
+}
+
+function SONIDOB(){
+var soundb = document.createElement('audio');
+soundb.setAttribute('src', 'sonido3.mp3');
+soundb.play();
+}
+
+function RESPUESTA(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="Img/si.gif" width="300" /></td></tr></table></center>');
+$("#btn").css("background", "#F7F700");
+setTimeout( 'CARGAR('+a+','+pregunta+')', 4000 );
+setTimeout( SONIDOA, 2000 );
+BOTON()
+}
+
+function RESPUESTA1(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="Img/no.gif" width="300" /></td></tr></table></center>');
+$("#btn1").css("background", "#F7F700");
+setTimeout( 'CARGAR1('+a+','+pregunta+')', 4000 );
+setTimeout( SONIDOB, 2000 );
+BOTON()
+}
+
+function RESPUESTA2(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="Img/no.gif" width="300" /></td></tr></table></center>');
+$("#btn2").css("background", "#F7F700");
+setTimeout( 'CARGAR2('+a+','+pregunta+')', 4000 );
+setTimeout( SONIDOB, 2000 );
+BOTON()
+}
+
+function RESPUESTA3(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="Img/no.gif" width="300" /></td></tr></table></center>');
+$("#btn3").css("background", "#F7F700");
+setTimeout( 'CARGAR3('+a+','+pregunta+')', 4000 );
+setTimeout( SONIDOB, 2000 );
+BOTON()
+}
+
+function RESPUESTA4(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="Img/no.gif" width="300" /></td></tr></table></center>');
+$("#btn4").css("background", "#F7F700");
+setTimeout( 'CARGAR4('+a+','+pregunta+')', 4000 );
+setTimeout( SONIDOB, 2000 );
+BOTON()
+}
+
+function RESPUESTA5(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="Img/no.gif" width="300" /></td></tr></table></center>');
+$("#btn5").css("background", "#F7F700");
+setTimeout( 'CARGAR5('+a+','+pregunta+')', 4000 );
+setTimeout( SONIDOB, 2000 );
+BOTON()
+}
+
+function RESPUESTA6(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="Img/no.gif" width="300" /></td></tr></table></center>');
+$("#btn6").css("background", "#F7F700");
+setTimeout( 'CARGAR6('+a+','+pregunta+')', 4000 );
+setTimeout( SONIDOB, 2000 );
+BOTON()
+}
+
+function RESPUESTA7(a,pregunta){
+$('#datos').html('<center><table><tr><td><img src="Img/no.gif" width="300" /></td></tr></table></center>');
+$("#btn7").css("background", "#F7F700");
+setTimeout( 'CARGAR7('+a+','+pregunta+')', 4000 );
+setTimeout( SONIDOB, 2000 );
+BOTON()
+}
+
+
+</script>
+<script type="text/javascript">//<![CDATA[ 
+$(function(){
+        window.RULETA = {
+
+            cache: {},
+
+            init: function () {
+                //console.log('controller init...');
+
+                var _this = this;
+                this.cache.wheel = $('.wheel');
+                this.cache.wheelMarker = $('.marker');
+                this.cache.wheelSpinBtn = $('.marker'); //im using the wheel as the spin button but simply change this to a button if you want.
+
+                //mapping is backwards as wheel spins clockwise //1=win
+                //this.cache.wheelMapping = [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3].reverse();
+				
+				this.cache.wheelMapping = [1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7];
+
+                this.cache.wheelSpinBtn.on('click', function (e) {
+                    e.preventDefault();
+                    if (!$(this).hasClass('disabled')) _this.spin();
+                });
+
+                //reset wheel
+                this.resetSpin();
+
+                //setup prize events
+                this.prizeEvents();
+            },
+
+            spin: function () {
+                //console.log('spinning wheel');
+
+                var _this = this;
+
+                // reset wheel
+                this.resetSpin();
+
+                //disable spin button while in progress
+                this.cache.wheelSpinBtn.addClass('disabled');
+
+                /*
+                    Wheel has 10 sections.
+                    Each section is 360/10 = 36deg.
+                */
+                var deg = -2571,
+                    duration = 8000; //optimal 6 secs
+					
+					var valores = [25, 51, 77, 102, 128, 154, 180, 205, 231, 257, 282, 308, 334, 360];
+					
+					var girar = Math.round(Math.random() * 11);
+					
+					var valorcolor = valores[girar];
+					
+					var deg1 = 720 + valorcolor; //optimal 6 secs
+					
+					//var deg1 = 500 + Math.round(Math.random() * 500); //optimal 6 secs
+
+                _this.cache.wheelPos = deg1;
+
+                //transition queuing
+                //ff bug with easeOutBack
+                this.cache.wheel.transition({
+                    rotate: '0deg'
+                }, 0)
+                    .transition({
+                    rotate: deg + 'deg'
+                }, duration, 'easeOutCubic');
+
+                //move marker
+                _this.cache.wheelMarker.transition({
+                    rotate: '0deg'
+                }, 0)
+                    .transition({
+                    rotate: deg1 + 'deg'
+                }, duration, 'easeOutCubic');
+
+var sound = document.createElement('audio');
+sound.setAttribute('src', 'sonido1.mp3');
+sound.play();
+
+                //wheel finish
+                setTimeout(function () {
+                    // did it win??!?!?!
+                    var win = _this.cache.wheelMapping[girar]; //zero based array
+
+                    //console.log('spin = ' + spin);
+                    //console.log('degrees = ' + degrees);
+                    //console.log('percent = ' + percent);
+                    //console.log('segment = ' + segment);
+                    //console.log('win = ' + win);
+
+                    //display dialog with slight delay to realise win or not.
+                    setTimeout(ADD(win), 700);
+
+                    //re-enable wheel spin
+                    _this.cache.wheelSpinBtn.removeClass('disabled');
+
+                }, duration);
+
+            },
+
+            resetSpin: function () {
+                this.cache.wheel.transition({
+                    rotate: '0deg'
+                }, 0);
+                this.cache.wheelPos = 0;
+            }
+
+        }
+
+        window.RULETA.init();
+});//]]>  
+
+</script>
+
+</head>
+<body>
+  <!-- By http://jquery4u.com / Sam Deering -->
+<div class="wheel-wrap">
+    <img class="wheel" src="Img/ruleta1.png" width="800px" style="margin-top:50px; float:center">
+    <img class="marker" src="Img/ruleta2.png" width="800px" style="margin-top:50px; float:center">
+</div>
+
+<img src="Img/ruleta.png" width="20%" style="margin-left:5%; margin-top:-550px; float:left" />
+<img src="Img/girar.png" width="20%" style="margin-left:5%; margin-top:-280px; float:center" />
+<img src="Img/materias1.png" width="25%" style="margin-left:70%; margin-top:-600px; float:left" />
+
+
+
+<div id="dialog">
+<div id="progressbar"><div class="progress-label">Cargando...</div></div>
+<div id="datos" style="padding:5px" align="center"></div><center></center>
+
+<div id="datostabla"></div><center></center>
+
+</div>
+   <img src="Img/Logo.png" width="10%" style="margin-left:0%; margin-top:1px; float:center" />
+</body>
+
+
+</html>
+
